@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Firebase Realtime Database Example</title>
+    </head>
+    <body>
+        <h2 class="template">Hello there {{personal.realname}} ({{personal.username}})</h2>
+        <h3 class="template">You have a total of {{personal.tb_balance}} T-bucks</h3>
+
+        <script defer type="module" src="database/logic.js"></script>
+        <script defer type="module" src="database/repopulate.js"></script>
+
+        <script defer type="module" src="client/auth.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer type="module" src="client/templates.js"></script>
+
+        <script defer type="module" src="users.js"></script>
+    </body>
+</html>
