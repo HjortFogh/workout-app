@@ -1,0 +1,72 @@
+<!-- <script>
+    let username = ""; // Gemmer brugernavnet
+
+    // Viser den angivne side og skjuler andre sider
+    function showPage(pageId) {
+        const pages = document.querySelectorAll(".page");
+        pages.forEach((page) => {
+            if (page.id === pageId) {
+                page.classList.add("active");
+                if (pageId === "home") {
+                    // Vis knapperne på Home siden
+                    document.getElementById("topBar").style.display = "flex";
+                    document.getElementById("newProgramBtn").style.display = "block";
+                    document.getElementById("profile-btn").style.display = "block";
+                    document.getElementById("logout-btn").style.display = "block";
+                } else {
+                    // Skjul knapperne på alle andre sider end Home siden
+                    document.getElementById("topBar").style.display = "none";
+                    document.getElementById("newProgramBtn").style.display = "none";
+                    document.getElementById("profile-btn").style.display = "none";
+                    document.getElementById("logout-btn").style.display = "none";
+                }
+            } else {
+                page.classList.remove("active");
+            }
+        });
+    }
+
+    // Funktion til at logge ind eller registrere brugeren
+    function loginOrRegister() {
+        const usernameInput = document.getElementById("usernameInput").value;
+        username = usernameInput; // Gem brugernavnet
+        showPage("home"); // Vis Home siden efter login/registrering
+        document.getElementById("usernameDisplay").textContent = username; // Opdater velkomstbesked
+    }
+
+    // Tilføjer et træningsprogram til listen over aktive programmer og skifter til Home siden
+    function addProgramToList(programName) {
+        const activeProgramsList = document.getElementById("activeProgramsList");
+        const listItem = document.createElement("li");
+        const button = document.createElement("button");
+        button.textContent = programName;
+        button.onclick = function () {
+            showProgram(programName);
+        };
+        listItem.appendChild(button);
+        activeProgramsList.appendChild(listItem);
+        showPage("home"); // Skift til Home siden efter tilføjelse af program
+    }
+
+    // Viser den valgte træningsprogram side med programnavn øverst
+    function showProgram(programName) {
+        showPage("home"); // Skift til Home siden
+        const pageTitle = document.createElement("h2");
+        pageTitle.textContent = programName;
+        const homePage = document.getElementById("home");
+        homePage.innerHTML = ""; // Ryd indholdet på Home siden
+        homePage.appendChild(pageTitle);
+    }
+
+    // Opdaterer brugernavnet på Profil siden og Home siden
+    function updateUsername() {
+        const profileUsernameInput = document.getElementById("profileUsernameInput").value;
+        if (profileUsernameInput.trim() !== "") {
+            username = profileUsernameInput; // Opdater brugernavnet
+            document.getElementById("usernameDisplay").textContent = username; // Opdater velkomstbesked
+        }
+    }
+
+    // Initialiserer siden ved at vise Login/Registrer siden
+    showPage("login-register");
+</script> -->

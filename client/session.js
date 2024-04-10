@@ -12,6 +12,7 @@ function loginAs(username) {
 function logout() {
     userChanged = true;
     document.cookie = `logged-in-as=null;SameSite=Lax`;
+    document.location = "/login.html";
 }
 
 function tryLogin(username, password) {

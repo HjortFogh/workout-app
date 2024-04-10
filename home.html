@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home | Trænings-App</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div id="container">
+            <!-- Øverste bjælke med knapper (vises kun på "Home" siden) -->
+            <div class="top-bar" id="topBar">
+                <a href="/new_program.html">Nyt forløb</a>
+                <a href="#" onclick="logout()">Logout</a>
+                <a href="/user_profile.html">Profil</a>
+            </div>
+
+            <!-- Home side -->
+            <div id="home" class="page">
+                <h1>Velkommen til forsiden, <span id="usernameDisplay"></span>!</h1>
+                <h2>Aktive programmer</h2>
+                <ul id="activeProgramsList">
+                    <!-- Aktive træningsprogrammer vil blive tilføjet her -->
+                    <li><button onclick="showProgram('Genoptræning')">Genoptræning</button></li>
+                    <li><button onclick="showProgram('Styrketræning')">Styrketræning</button></li>
+                    <li><button onclick="showProgram('Balancetræning')">Balancetræning</button></li>
+                    <li><button onclick="showProgram('Konditionstræning')">Konditionstræning</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <script defer type="module" src="client/session.js"></script>
+    </body>
+</html>

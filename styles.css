@@ -1,0 +1,66 @@
+/* Generel styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Lysegrå baggrundsfarve */
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#container {
+    width: 90vw; /* Begrænset bredde til 90% af viewport bredden */
+    max-width: 400px; /* Maksimal bredde for en mobiltelefon */
+    height: calc(90vw * (16 / 9)); /* Aspect ratio 16:9 for højden */
+    max-height: 600px; /* Maksimal højde for en mobiltelefon */
+    padding: 20px;
+    background-color: #fff; /* Hvid baggrundsfarve til container */
+    border-radius: 10px; /* Afrundede hjørner til container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Skyggeeffekt */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Skjul indhold, der er for stort til containeren */
+}
+
+/* Header-stil */
+.top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Sider */
+.page {
+    display: none; /* Skjuler alle sider som standard */
+}
+
+.active {
+    display: flex; /* Viser den aktive side som flex-container */
+    flex-direction: column; /* Stak indhold lodret */
+    justify-content: center; /* Centrerer indhold lodret */
+    align-items: center; /* Centrerer indhold vandret */
+    height: 100%; /* Fylder hele containerens højde */
+    width: 100%; /* Fylder hele containerens bredde */
+    overflow-y: auto; /* Tilføj scroll, hvis indholdet er for stort */
+}
+
+/* Knapper */
+a {
+    margin: 10px 0;
+    padding: 10px 15px; /* Mindre padding for at gøre knapperne mindre */
+    border: none;
+    border-radius: 20px; /* Afrundede hjørner til knapper */
+    background-color: #4caf50; /* Grøn farve */
+    color: #fff;
+    font-size: 14px; /* Mindre skriftstørrelse */
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box; /* Sikrer at padding er inkluderet i bredden */
+}

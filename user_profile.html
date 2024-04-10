@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Profil | Trænings-App</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div id="container">
+            <!-- Profilside -->
+            <div id="profile" class="page">
+                <h1>Din Profil</h1>
+                <form>
+                    <label for="username">Brugernavn:</label>
+                    <input type="text" id="profileUsernameInput" value="" placeholder="DitBrugernavn" /><br />
+                    <!-- Tilføj flere profiloplysninger efter behov -->
+                    <button type="button" onclick="updateUsername()">Gem ændringer</button>
+                    <button type="button" onclick="showPage('home')">Tilbage til Home</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
