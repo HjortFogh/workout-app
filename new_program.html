@@ -3,20 +3,39 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Add program | Trænings-App</title>
+        <title>Tilføj program | Trænings-App</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div id="container">
-            <!-- Vælg træningsprogram side -->
-            <div id="choose-program" class="page">
+        <div class="container">
+            <div class="topnav">
+                <div class="topnav-right">
+                    <a href="#" onclick="logout()">🔓Log af</a>
+                    <a href="/index.html">🏠Hjem</a>
+                </div>
+            </div>
+
+            <div style="text-align: center">
                 <h1>Vælg et træningsprogram</h1>
-                <button onclick="addProgramToList('Genoptræning')">Genoptræning</button>
-                <button onclick="addProgramToList('Styrketræning')">Styrketræning</button>
-                <button onclick="addProgramToList('Balancetræning')">Balancetræning</button>
-                <button onclick="addProgramToList('Konditionstræning')">Konditionstræning</button>
-                <button onclick="showPage('contact-physio')">Kontakt en fysioterapeut</button>
+                <button type="button" style="width: 70%; border-radius: 5px; margin: 0.2rem" disabled>Genoptræning (kommer snart)</button><br />
+                <button type="button" style="width: 70%; border-radius: 5px; margin: 0.2rem" onclick="handleAddProgram('styrketræning')">Styrketræning</button
+                ><br />
+                <button type="button" style="width: 70%; border-radius: 5px; margin: 0.2rem" disabled>Balancetræning (kommer snart)</button><br />
+                <button type="button" style="width: 70%; border-radius: 5px; margin: 0.2rem" disabled>Konditionstræning (kommer snart)</button><br />
+                <button type="button" style="width: 70%; border-radius: 5px; margin: 2rem 0" disabled>Nyt program (kommer snart)</button>
+                <button type="button" style="width: 70%; border-radius: 5px" disabled>Kontakt en fysioterapeut (kommer snart)</button>
             </div>
         </div>
+
+        <script defer type="module" src="client/templates.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer>
+            function handleAddProgram(programID) {
+                userData((data) => {
+                    addProgram(data.personal.username, programID);
+                    window.location = `/show_program.html?program=${programID}`;
+                });
+            }
+        </script>
     </body>
 </html>

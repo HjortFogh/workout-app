@@ -3,22 +3,58 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login or register | Trænings-App</title>
+        <title>Login eller Opret | Trænings-App</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div id="container">
-            <!-- Indhold af hjemmesiden -->
-            <!-- Login/Registrer side -->
-            <div id="login-register" class="page active">
-                <h1>Login or Register</h1>
-                <form>
-                    <input type="text" id="usernameInput" placeholder="Username" required /><br />
-                    <input type="password" placeholder="Password" required /><br />
-                    <button type="button" onclick="loginOrRegister()">Login</button>
-                    <button type="button" onclick="loginOrRegister()">Register</button>
-                </form>
+        <div class="container" style="text-align: center; background-image: url('wallpaper.jpg'); background-size: cover">
+            <div style="background-color: #dfdfdfc0; width: 80%; margin: 20vh auto; padding: 0.5rem; border-radius: 10px">
+                <h2>Login eller Opret ny bruger</h2>
+
+                <input style="margin: 0.2rem" id="username-input" type="text" placeholder="☛Brugernavn" required /><br />
+                <input style="margin: 0.2rem" id="password-input" type="password" placeholder="☛Kodeord" required /><br />
+                <button style="margin: 0.2rem" onclick="handleTryLogin()">Login</button>
+                <button style="margin: 0.2rem" onclick="handleTryCreateUser()">Opret</button>
+
+                <div
+                    id="login-warning-box"
+                    style="width: 70%; background-color: #eeff0083; border-radius: 10px; margin: 2rem auto; padding: 0.3rem; visibility: hidden"
+                >
+                    <span style="font-size: 1rem">⚠️</span>
+                    <span style="font-size: 1rem" id="warning-info-label">...</span>
+                </div>
             </div>
         </div>
+
+        <script defer type="module" src="client/templates.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer>
+            function displayWarningBox(info) {
+                document.getElementById("warning-info-label").innerText = info;
+                document.getElementById("login-warning-box").style.visibility = "visible";
+                setTimeout(() => (document.getElementById("login-warning-box").style.visibility = "hidden"), 5000);
+            }
+
+            function handleTryLogin() {
+                let username = document.getElementById("username-input").value;
+                let password = document.getElementById("password-input").value;
+
+                tryLogin(username, password, () => {
+                    document.getElementById("username-input").value = "";
+                    document.getElementById("password-input").value = "";
+                    displayWarningBox("Forkert bruger eller kode");
+                });
+            }
+            function handleTryCreateUser() {
+                let username = document.getElementById("username-input").value;
+                let password = document.getElementById("password-input").value;
+
+                tryCreateUser(username, password, () => {
+                    document.getElementById("username-input").value = "";
+                    document.getElementById("password-input").value = "";
+                    displayWarningBox("Bruger eksisterer allerede");
+                });
+            }
+        </script>
     </body>
 </html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Udfør program | Trænings-App</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="topnav">
+                <div class="topnav-right">
+                    <a href="#" onclick="logout()">🔓Log af</a>
+                    <a href="/index.html">🏠Hjem</a>
+                </div>
+            </div>
+
+            <div style="height: 100%; padding: 1rem">
+                <div style="height: 80%; position: relative">
+                    <div id="exercise-container"></div>
+                    <div
+                        style="
+                            background-color: #dddddd;
+                            position: absolute;
+                            bottom: 0;
+                            width: 100%;
+                            text-align: center;
+                            display: flex;
+                            justify-content: space-between;
+                            border-radius: 10px;
+                            background-color: #eeeeee;
+                            box-shadow: 0 4px 8px #00000033;
+                        "
+                    >
+                        <button type="button" style="font-size: 3rem; border: 0; background-color: #0000" onclick="handleChangeExercise(-1)">⏪</button>
+                        <button type="button" style="font-size: 3rem; border: 0; background-color: #0000" onclick="handleChangeExercise(+1)">⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                id="reward-popup"
+                style="
+                    width: 36vh;
+                    height: 18vh;
+                    border-radius: 10px;
+                    position: absolute;
+                    top: calc(50% - 18vh);
+                    left: calc(50% - 18vh);
+                    text-align: center;
+                    line-height: 5vh;
+                    background-color: #eeeeee;
+                    box-shadow: 0 4px 8px #00000033;
+                    display: none;
+                "
+            >
+                <h3>🏆Godt klaret!</h3>
+                <h3>Du tjente 20 V-Bucks</h3>
+            </div>
+        </div>
+
+        <script defer type="module" src="client/templates.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer>
+            function handleChangeExercise(offset) {
+                let urlParams = new URLSearchParams(window.location.search);
+                window.location = `/do_program.html?program=${urlParams.get("program")}&i=${Number(urlParams.get("i")) + offset}`;
+            }
+            window.addEventListener("load", () => {
+                let urlParams = new URLSearchParams(window.location.search);
+                getProgramExerciseByIndex(
+                    urlParams.get("program"),
+                    urlParams.get("i"),
+                    (exercise) => {
+                        let frame = document.getElementById("exercise-container");
+                        frame.innerHTML = `<h2>${exercise.title}</h2><img style="width: 100%" src="${exercise.thumbnail_url}">`;
+                    },
+                    () => {
+                        rewardCurrentUser(20);
+                        document.getElementById("reward-popup").style.display = "block";
+                        setTimeout(() => (window.location = `/index.html`), 3000);
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>

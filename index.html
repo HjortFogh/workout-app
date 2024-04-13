@@ -1,22 +1,61 @@
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Firebase Realtime Database Example</title>
+        <title>Home | Trænings-App</title>
+        <link rel="stylesheet" href="styles.css" />
     </head>
+
     <body>
-        <h2 class="template">Hello there {{personal.realname}} ({{personal.username}})</h2>
-        <h3 class="template">You have a total of {{personal.tb_balance}} T-bucks</h3>
+        <div class="container">
+            <div class="topnav">
+                <a href="/new_program.html" class="float-left">🚀Nyt forløb</a>
+                <div class="topnav-right">
+                    <a href="#" onclick="logout()">🔓Log af</a>
+                    <a href="/user_profile.html">⚙️Profil</a>
+                </div>
+            </div>
 
-        <script defer type="module" src="database/logic.js"></script>
-        <script defer type="module" src="database/repopulate.js"></script>
+            <div style="padding: 1rem">
+                <h2>Aktive forløb:</h2>
+                <div id="active-programs-list"></div>
+            </div>
+        </div>
 
-        <script defer type="module" src="client/auth.js"></script>
-        <script defer type="module" src="client/session.js"></script>
         <script defer type="module" src="client/templates.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer>
+            window.addEventListener("load", () => {
+                userData((user) => {
+                    updateProgramsList(user.personal.username);
+                });
+            });
 
-        <script defer type="module" src="users.js"></script>
+            function updateProgramsList(username) {
+                getActivePrograms(username, (active) => {
+                    let list = document.getElementById("active-programs-list");
+                    list.innerHTML = "";
+                    for (let program of active)
+                        list.innerHTML += `
+                        <div class="container-sub-box">
+                        <span style="font-size: 1.2rem">${program.toLocaleUpperCase()}</span>
+                        <button style="float: right; border: 0; font-size: 1.2rem; background-color: #0000" title="Start program" onclick="handleStartProgram('${program}')">💪</button>
+                        <button style="float: right; border: 0; font-size: 1.2rem; background-color: #0000" title="Fjern program" onclick="handleRemoveProgram('${program}')">🗑️</button>
+                        </div>`;
+                });
+            }
+
+            function handleStartProgram(programID) {
+                window.location = `/do_program.html?program=${programID}&i=0`;
+            }
+
+            function handleRemoveProgram(programID) {
+                userData((user) => {
+                    removeProgram(user.personal.username, programID);
+                    updateProgramsList(user.personal.username);
+                });
+            }
+        </script>
     </body>
 </html>

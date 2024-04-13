@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Program | Trænings-App</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="topnav">
+                <div class="topnav-right">
+                    <a href="#" onclick="logout()">🔓Log af</a>
+                    <a href="/index.html">🏠Hjem</a>
+                </div>
+            </div>
+
+            <div style="padding: 1rem; height: 100%">
+                <div id="exercise-container" style="overflow-y: auto; height: 85%">
+                    <h3 style="margin-bottom: 0">Program:</h3>
+                    <h2 style="margin-top: 0.5rem" id="exercise-title"></h2>
+                </div>
+            </div>
+        </div>
+
+        <script defer type="module" src="client/templates.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer>
+            let programID = new URLSearchParams(window.location.search).get("program");
+            window.addEventListener("load", () => {
+                if (programID) {
+                    document.getElementById("exercise-title").innerText = programID.toLocaleUpperCase();
+
+                    getProgramExercises(programID, (exercises) => {
+                        let parent = document.getElementById("exercise-container");
+                        for (let exercise of exercises) {
+                            let frame = document.createElement("div");
+                            frame.classList.add("container-sub-box");
+                            frame.innerHTML = `<h3>${exercise.title}</h3><p>${exercise.equipment}</p><p>Muskelgruppe: ${exercise.primary_muscles}</p><img style="width: 100%" src="${exercise.thumbnail_url}">`;
+                            parent.appendChild(frame);
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

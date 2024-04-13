@@ -3,22 +3,53 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Profil | Trænings-App</title>
+        <title class="template">{{personal.realname}} | Trænings-App</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div id="container">
-            <!-- Profilside -->
-            <div id="profile" class="page">
-                <h1>Din Profil</h1>
-                <form>
-                    <label for="username">Brugernavn:</label>
-                    <input type="text" id="profileUsernameInput" value="" placeholder="DitBrugernavn" /><br />
-                    <!-- Tilføj flere profiloplysninger efter behov -->
-                    <button type="button" onclick="updateUsername()">Gem ændringer</button>
-                    <button type="button" onclick="showPage('home')">Tilbage til Home</button>
-                </form>
+        <div class="container">
+            <div class="topnav">
+                <div class="topnav-right">
+                    <a href="#" onclick="logout()">🔓Log af</a>
+                    <a href="/index.html">🏠Hjem</a>
+                </div>
+            </div>
+
+            <div style="padding: 1rem">
+                <h2 class="template">{{personal.realname}} (#{{personal.username}})</h2>
+                <h3 class="template">T-Bucks: {{personal.tb_balance}}</h3>
+
+                <br />
+
+                <label>Opdater dit rigtige navn:</label><br />
+                <input style="margin: 0.4rem 0" type="text" id="realname-input" placeholder="☛Navn" /><br />
+                <button type="button" onclick="handleUpdateRealname()">Gem ændringer</button><br />
+                <br />
+                <hr />
+                <br />
+                <p>I tilfælde af manglede data, eller hvis det ønskes at fjerne alle brugerskabte konti, kan databasen genstartes:</p>
+                <button type="button" onclick="handleRestartDatabase()">Genstart database</button>
             </div>
         </div>
+
+        <script defer type="module" src="client/templates.js"></script>
+        <script defer type="module" src="client/session.js"></script>
+        <script defer type="module" src="database/repopulate.js"></script>
+        <script defer>
+            function handleUpdateRealname() {
+                userData((userdata) => {
+                    let realname = document.getElementById("realname-input").value;
+                    if (realname.length == 0) return;
+                    let username = userdata.personal.username;
+                    changeUserRealName(username, realname);
+                    location.reload();
+                });
+                document.getElementById("realname-input").value = "";
+            }
+            function handleRestartDatabase() {
+                repopulate();
+                logout();
+            }
+        </script>
     </body>
 </html>

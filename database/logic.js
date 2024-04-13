@@ -18,17 +18,17 @@ function errorHandler(msg) {
     console.warn(msg);
 }
 
-function readData(path, handler) {
+function readData(path, handler, _errorHandler = errorHandler) {
     get(ref(database, path)).then((snapshot) => {
         if (snapshot.exists()) handler(snapshot.toJSON());
-        else errorHandler(`Failed to read resource: '${path}'`);
+        else _errorHandler(`Failed to read resource: '${path}'`);
     });
 }
 
-function writeData(path, data, handler = () => {}) {
+function writeData(path, data, handler = () => {}, _errorHandler = errorHandler) {
     set(ref(database, path), data)
         .then(handler)
-        .catch((error) => errorHandler(error));
+        .catch((error) => _errorHandler(error));
 }
 
 function deleteData(path, handler = () => {}) {
@@ -37,4 +37,8 @@ function deleteData(path, handler = () => {}) {
         .catch((error) => errorHandler(error));
 }
 
-export { readData, writeData, deleteData };
+function exists(path, handler) {
+    get(ref(database, path)).then((snapshot) => handler(snapshot.exists()));
+}
+
+export { readData, writeData, deleteData, exists };
