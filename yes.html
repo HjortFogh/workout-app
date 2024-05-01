@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Træningsapp</title>
+    <style>
+        /* Generel styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5; /* Lysegrå baggrundsfarve */
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            width: 90vw; /* Begrænset bredde til 90% af viewport bredden */
+            max-width: 400px; /* Maksimal bredde for en mobiltelefon */
+            height: calc(90vw * (16 / 9)); /* Aspect ratio 16:9 for højden */
+            max-height: 600px; /* Maksimal højde for en mobiltelefon */
+            padding: 20px;
+            background-color: #fff; /* Hvid baggrundsfarve til container */
+            border-radius: 10px; /* Afrundede hjørner til container */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Skyggeeffekt */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Skjul indhold, der er for stort til containeren */
+        }
+
+        /* Header-stil */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Sider */
+        .page {
+            display: none; /* Skjuler alle sider som standard */
+        }
+
+        .active {
+            display: flex; /* Viser den aktive side som flex-container */
+            flex-direction: column; /* Stak indhold lodret */
+            justify-content: center; /* Centrerer indhold lodret */
+            align-items: center; /* Centrerer indhold vandret */
+            height: 100%; /* Fylder hele containerens højde */
+            width: 100%; /* Fylder hele containerens bredde */
+            overflow-y: auto; /* Tilføj scroll, hvis indholdet er for stort */
+        }
+
+        /* Knapper */
+        button {
+            margin: 10px 0;
+            padding: 10px 15px; /* Mindre padding for at gøre knapperne mindre */
+            border: none;
+            border-radius: 20px; /* Afrundede hjørner til knapper */
+            background-color: #4CAF50; /* Grøn farve */
+            color: #fff;
+            font-size: 14px; /* Mindre skriftstørrelse */
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box; /* Sikrer at padding er inkluderet i bredden */
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+
+    <!-- Øverste bjælke med knapper (vises kun på "Home" siden) -->
+    <div class="top-bar" id="topBar">
+        <button id="profile-btn" onclick="showPage('profile')">Profil</button>
+        <button id="newProgramBtn" onclick="showPage('choose-program')">Tilføj nyt forløb</button>
+        <button id="logout-btn" onclick="showPage('login-register')">Logout</button>
+    </div>
+
+    <!-- Indhold af hjemmesiden -->
+    <!-- Login/Registrer side -->
+    <div id="login-register" class="page active">
+        <h1>Login or Register</h1>
+        <form>
+            <input type="text" id="usernameInput" placeholder="Username" required><br>
+            <input type="password" placeholder="Password" required><br>
+            <button type="button" onclick="loginOrRegister()">Login</button>
+            <button type="button" onclick="loginOrRegister()">Register</button>
+        </form>
+    </div>
+
+    <!-- Home side -->
+    <div id="home" class="page">
+        <h1>Velkommen til forsiden, <span id="usernameDisplay"></span>!</h1>
+        <h2>Aktive programmer</h2>
+        <ul id="activeProgramsList">
+            <!-- Aktive træningsprogrammer vil blive tilføjet her -->
+            <li><button onclick="showProgram('Genoptræning')">Genoptræning</button></li>
+            <li><button onclick="showProgram('Styrketræning')">Styrketræning</button></li>
+            <li><button onclick="showProgram('Balancetræning')">Balancetræning</button></li>
+            <li><button onclick="showProgram('Konditionstræning')">Konditionstræning</button></li>
+        </ul>
+    </div>
+
+    <!-- Vælg træningsprogram side -->
+    <div id="choose-program" class="page">
+        <h1>Vælg et træningsprogram</h1>
+        <button onclick="addProgramToList('Genoptræning')">Genoptræning</button>
+        <button onclick="addProgramToList('Styrketræning')">Styrketræning</button>
+        <button onclick="addProgramToList('Balancetræning')">Balancetræning</button>
+        <button onclick="addProgramToList('Konditionstræning')">Konditionstræning</button>
+        <button onclick="showPage('contact-physio')">Kontakt en fysioterapeut</button>
+    </div>
+
+    <!-- Profilside -->
+    <div id="profile" class="page">
+        <h1>Din Profil</h1>
+        <form>
+            <label for="username">Brugernavn:</label>
+            <input type="text" id="profileUsernameInput" value="" placeholder="DitBrugernavn"><br>
+            <!-- Tilføj flere profiloplysninger efter behov -->
+            <button type="button" onclick="updateUsername()">Gem ændringer</button>
+            <button type="button" onclick="showPage('home')">Tilbage til Home</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    let username = ''; // Gemmer brugernavnet
+
+    // Viser den angivne side og skjuler andre sider
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => {
+            if (page.id === pageId) {
+                page.classList.add('active');
+                if (pageId === 'home') {
+                    // Vis knapperne på Home siden
+                    document.getElementById('topBar').style.display = 'flex';
+                    document.getElementById('newProgramBtn').style.display = 'block';
+                    document.getElementById('profile-btn').style.display = 'block';
+                    document.getElementById('logout-btn').style.display = 'block';
+                } else {
+                    // Skjul knapperne på alle andre sider end Home siden
+                    document.getElementById('topBar').style.display = 'none';
+                    document.getElementById('newProgramBtn').style.display = 'none';
+                    document.getElementById('profile-btn').style.display = 'none';
+                    document.getElementById('logout-btn').style.display = 'none';
+                }
+            } else {
+                page.classList.remove('active');
+            }
+        });
+    }
+
+    // Funktion til at logge ind eller registrere brugeren
+    function loginOrRegister() {
+        const usernameInput = document.getElementById('usernameInput').value;
+        username = usernameInput; // Gem brugernavnet
+        showPage('home'); // Vis Home siden efter login/registrering
+        document.getElementById('usernameDisplay').textContent = username; // Opdater velkomstbesked
+    }
+
+    // Tilføjer et træningsprogram til listen over aktive programmer og skifter til Home siden
+    function addProgramToList(programName) {
+        const activeProgramsList = document.getElementById('activeProgramsList');
+        const listItem = document.createElement('li');
+        const button = document.createElement('button');
+        button.textContent = programName;
+        button.onclick = function() {
+            showProgram(programName);
+        };
+        listItem.appendChild(button);
+        activeProgramsList.appendChild(listItem);
+        showPage('home'); // Skift til Home siden efter tilføjelse af program
+    }
+
+    // Viser den valgte træningsprogram side med programnavn øverst
+    function showProgram(programName) {
+        showPage('home'); // Skift til Home siden
+        const pageTitle = document.createElement('h2');
+        pageTitle.textContent = programName;
+        const homePage = document.getElementById('home');
+        homePage.innerHTML = ''; // Ryd indholdet på Home siden
+        homePage.appendChild(pageTitle);
+    }
+
+    // Opdaterer brugernavnet på Profil siden og Home siden
+    function updateUsername() {
+        const profileUsernameInput = document.getElementById('profileUsernameInput').value;
+        if (profileUsernameInput.trim() !== '') {
+            username = profileUsernameInput; // Opdater brugernavnet
+            document.getElementById('usernameDisplay').textContent = username; // Opdater velkomstbesked
+        }
+    }
+
+    // Initialiserer siden ved at vise Login/Registrer siden
+    showPage('login-register');
+</script>
+
+</body>
+</html>
