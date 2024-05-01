@@ -24,11 +24,6 @@
                 <label>Opdater dit rigtige navn:</label><br />
                 <input style="margin: 0.4rem 0" type="text" id="realname-input" placeholder="☛Navn" /><br />
                 <button type="button" onclick="handleUpdateRealname()">Gem ændringer</button><br />
-                <br />
-                <hr />
-                <br />
-                <p>I tilfælde af manglede data, eller hvis det ønskes at fjerne alle brugerskabte konti, kan databasen genstartes:</p>
-                <button type="button" onclick="handleRestartDatabase()">Genstart database</button>
             </div>
         </div>
 
@@ -45,10 +40,6 @@
                     location.reload();
                 });
                 document.getElementById("realname-input").value = "";
-            }
-            function handleRestartDatabase() {
-                repopulate();
-                logout();
             }
         </script>
     </body>

@@ -29,6 +29,10 @@
         <script defer type="module" src="client/templates.js"></script>
         <script defer type="module" src="client/session.js"></script>
         <script defer>
+            window.addEventListener("load", () => {
+                if (isLoggedIn()) document.location = "/index.html";
+            });
+
             function displayWarningBox(info) {
                 document.getElementById("warning-info-label").innerText = info;
                 document.getElementById("login-warning-box").style.visibility = "visible";
